@@ -61,11 +61,9 @@ button,input,select,textarea{font-family:inherit}
   </header>
 
   <div style="flex:1;display:flex;min-height:0">
-    <sc-if value="{{ showScrim }}" hint-placeholder-val="{{ false }}">
-      <div onClick="{{ closeSide }}" style="position:fixed;top:56px;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:19"></div>
-    </sc-if>
-    <sc-if value="{{ showAside }}" hint-placeholder-val="{{ true }}">
-    <aside style="{{ asideStyle }}">
+    <div onClick="{{ closeSide }}" style="{{ scrimStyle }}"></div>
+    <aside style="{{ asideStyle }}" aria-hidden="{{ asideHidden }}">
+    <div style="{{ asideInner }}">
       <nav style="padding:10px;display:flex;flex-direction:column;gap:2px;flex:1">
         <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;background:#FFF2E9;color:#FF6F0F;font-weight:700">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>홈</div>
@@ -111,8 +109,8 @@ button,input,select,textarea{font-family:inherit}
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"></path></svg>조직도</div>
       </nav>
       <div style="padding:10px 16px 16px;font-size:12px;color:#ADB1BA">Akiaka ERP 데이터 공유</div>
+    </div>
     </aside>
-    </sc-if>
 
     <main style="flex:1;min-width:0;padding:clamp(16px,2.4vw,24px) clamp(12px,2.4vw,24px) 40px;display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
@@ -290,8 +288,13 @@ class Component extends DCLogic {
       settingsOpen: !!s.settingsOpen, toggleSettings: () => this.setState({ settingsOpen: !s.settingsOpen }), closeSettings: () => this.setState({ settingsOpen: false }),
       userOpen: !!s.userOpen, toggleUser: () => this.setState({ userOpen: !s.userOpen }), closeUser: () => this.setState({ userOpen: false }),
       userChevron: { transition: 'transform .15s', transform: s.userOpen ? 'rotate(180deg)' : 'none' },
-      showAside: sideOpen, showScrim: sideOpen && !wide,
-      asideStyle: o(`width:232px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;top:60px;height:calc(100vh - 60px);overflow-y:auto;${wide?'position:sticky':'position:fixed;left:0;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,0.12)'}`),
+      
+      asideHidden: sideOpen ? 'false' : 'true',
+      asideStyle: o(wide
+        ? `flex-shrink:0;width:${sideOpen?232:0}px;overflow:hidden;background:#fff;position:sticky;top:60px;height:calc(100vh - 60px);visibility:${sideOpen?'visible':'hidden'};transition:width .3s cubic-bezier(.2,.8,.2,1), visibility 0s linear ${sideOpen?'0s':'.3s'}`
+        : `width:232px;background:#fff;position:fixed;left:0;top:60px;height:calc(100vh - 60px);z-index:20;transform:translateX(${sideOpen?'0':'-100%'});box-shadow:${sideOpen?'0 8px 24px rgba(0,0,0,0.12)':'none'};visibility:${sideOpen?'visible':'hidden'};transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, visibility 0s linear ${sideOpen?'0s':'.3s'}`),
+      asideInner: o(`width:232px;height:100%;overflow-y:auto;display:flex;flex-direction:column;opacity:${sideOpen?1:0};transform:translateX(${wide&&!sideOpen?'-16px':'0'});transition:opacity .25s ease, transform .3s cubic-bezier(.2,.8,.2,1)`),
+      scrimStyle: o(`position:fixed;top:60px;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:19;display:${wide?'none':'block'};opacity:${sideOpen?1:0};pointer-events:${sideOpen?'auto':'none'};transition:opacity .3s ease`),
       toggleSide: () => this.setState({ sideOpen: !sideOpen }),
       closeSide: () => this.setState({ sideOpen: false }),
       approvalOpen: s.approvalOpen, boardOpen: s.boardOpen,
