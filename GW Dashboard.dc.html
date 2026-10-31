@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+body{margin:0;background:#F7F8FA;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;color:#212124;-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:#FF6F0F;text-decoration:none}a:hover{color:#E65A00}
+*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;font-size:14px;letter-spacing:-0.01em">
+  <header style="height:56px;background:#fff;border-bottom:1px solid #EAEBEE;display:flex;align-items:center;padding:0 clamp(8px,2vw,20px);gap:6px;position:sticky;top:0;z-index:30">
+    <button onClick="{{ toggleSide }}" aria-label="메뉴" style="width:40px;height:40px;border:none;background:transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#4D5159;flex-shrink:0" style-hover="background:#F2F3F6">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+    <nav style="display:flex;gap:4px;align-items:center">
+      <img src="assets/akiaka-logo.png" alt="Akiaka" style="height:20px;width:auto;display:block;margin:0 8px 0 4px">
+      <a href="ERP Dashboard.dc.html" style="padding:8px 10px;font-weight:600;color:#868B94;border-radius:8px;cursor:pointer" style-hover="background:#F2F3F6;color:#212124">ERP</a>
+      <span style="padding:6px 12px;font-weight:700;color:#fff;background:#FF6F0F;border-radius:8px">GW</span>
+    </nav>
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="position:relative;display:flex;color:#4D5159;padding:6px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+        <span style="position:absolute;top:0;right:-2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#FF6F0F;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff">2</span>
+      </span>
+      <div style="position:relative">
+        <button onClick="{{ toggleUser }}" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 8px 0 4px;border:none;background:transparent;border-radius:20px;cursor:pointer;font:inherit;color:#212124" style-hover="background:#F2F3F6">
+          <span style="width:32px;height:32px;border-radius:50%;background:#FFF2E9;color:#FF6F0F;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">손</span>
+          <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+            <b style="font-size:14px;font-weight:600;white-space:nowrap">골드킹/손금왕</b>
+          </sc-if>
+          <svg style="{{ userChevron }}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <sc-if value="{{ userOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeUser }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:40"></div>
+          <div style="position:absolute;right:0;top:48px;width:232px;background:#fff;border:1px solid #EAEBEE;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:41;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px">
+              <span style="width:40px;height:40px;border-radius:50%;background:#FFF2E9;color:#FF6F0F;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">손</span>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                <b style="font-size:14px;font-weight:700">골드킹/손금왕</b>
+                <span style="font-size:13px;color:#868B94">디자인센터 · 매니저</span>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F2F3F6;padding:6px">
+              <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:8px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>내 정보</div>
+              <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:8px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path></svg>로그아웃</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <sc-if value="{{ showScrim }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeSide }}" style="position:fixed;top:56px;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:19"></div>
+    </sc-if>
+    <sc-if value="{{ showAside }}" hint-placeholder-val="{{ true }}">
+    <aside style="{{ asideStyle }}">
+      <nav style="padding:10px;display:flex;flex-direction:column;gap:2px;flex:1">
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;background:#FFF2E9;color:#FF6F0F;font-weight:700">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>홈</div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"></path></svg>문서기안</div>
+        <div style="height:1px;background:#F2F3F6;margin:8px 4px"></div>
+        <div onClick="{{ toggleApproval }}" style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#212124;font-weight:600;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+          <span style="flex:1">내 결재함</span>
+          <svg style="{{ approvalChevron }}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ADB1BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <sc-if value="{{ approvalOpen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:1px;margin-left:21px;padding-left:12px;border-left:1px solid #EAEBEE">
+          <sc-for list="{{ approvalItems }}" as="it" hint-placeholder-count="9">
+            <div style="{{ it.style }}" style-hover="background:#F7F8FA;color:#212124">
+              <span style="flex:1">{{ it.label }}</span><span style="color:#ADB1BA;font-size:13px;font-variant-numeric:tabular-nums">{{ it.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <div style="height:1px;background:#F2F3F6;margin:8px 4px"></div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>문서 검색</div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg>닥스웨이브</div>
+        <div style="height:1px;background:#F2F3F6;margin:8px 4px"></div>
+        <div onClick="{{ toggleBoard }}" style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#212124;font-weight:600;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>
+          <span style="flex:1">공지·게시판</span>
+          <svg style="{{ boardChevron }}" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ADB1BA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </div>
+        <sc-if value="{{ boardOpen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:1px;margin-left:21px;padding-left:12px;border-left:1px solid #EAEBEE">
+          <sc-for list="{{ boardItems }}" as="b" hint-placeholder-count="5">
+            <div style="height:32px;display:flex;align-items:center;padding:0 10px;border-radius:6px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124">{{ b }}</div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <div style="height:1px;background:#F2F3F6;margin:8px 4px"></div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>내 정보</div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"></path></svg>조직도</div>
+      </nav>
+      <div style="padding:10px 16px 16px;font-size:12px;color:#ADB1BA">Akiaka ERP 데이터 공유</div>
+    </aside>
+    </sc-if>
+
+    <main style="flex:1;min-width:0;padding:clamp(16px,2.4vw,24px) clamp(12px,2.4vw,24px) 40px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <span style="font-size:14px;font-weight:700;color:#FF6F0F">대시보드</span>
+          <h1 style="margin:0;font-size:clamp(20px,2.2vw,22px);font-weight:700;letter-spacing:-0.03em">골드킹/손금왕 님, 안녕하세요</h1>
+          <p style="margin:0;color:#868B94">오늘 처리할 일과 최근 소식입니다.</p>
+        </div>
+        <div style="position:relative">
+          <button onClick="{{ toggleSettings }}" style="height:38px;padding:0 14px;border-radius:8px;border:1px solid #DCDEE3;background:#fff;font:inherit;font-size:14px;font-weight:600;color:#212124;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap" style-hover="background:#F7F8FA">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5H3M12 19H3M14 3v4M16 17v4M21 12h-9M21 19h-5M21 5h-7M8 10v4M8 12H3"></path></svg>화면 설정</button>
+          <sc-if value="{{ settingsOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeSettings }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:40"></div>
+            <div style="position:absolute;right:0;top:48px;width:240px;background:#fff;border:1px solid #EAEBEE;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:41;padding:16px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-size:13px;font-weight:600;color:#868B94">버전 정보</span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#212124;font-variant-numeric:tabular-nums;white-space:nowrap">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9M6 9v6"></path></svg>v2026-10-30 · d8fdd08</span>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px">
+        <section style="grid-column:1 / -1;background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;padding:20px 20px 0">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"></path></svg>내 문서함</h2>
+            <span style="font-size:13px;color:#868B94;white-space:nowrap">최근 14일 기준 (결재할 문서는 전부)</span>
+          </div>
+          <div style="padding:14px 20px 0;font-size:14px;color:#4D5159">모두 <b style="color:#212124">1</b>건</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(92px,(100% - 40px) / 6)),1fr));gap:8px;padding:10px 20px 18px">
+            <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="6">
+              <button onClick="{{ t.select }}" style="{{ t.style }}">
+                <span style="{{ t.dotStyle }}">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="{{ t.icon }}"></path></svg>
+                </span>
+                <span style="font-size:14px;color:#4D5159;font-weight:500;white-space:nowrap">{{ t.label }}</span>
+                <span style="display:flex;align-items:baseline;gap:2px"><b style="{{ t.numStyle }}">{{ t.count }}</b><span style="font-size:13px;color:#868B94">건</span></span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid #F2F3F6;flex:1;min-height:72px;display:flex;align-items:center;justify-content:center;color:#868B94;font-size:14px;padding:20px;text-align:center">{{ docEmpty }}</div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;padding:20px 20px;display:flex;flex-direction:column;gap:14px;min-width:0">
+          <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>출퇴근</h2>
+          <span style="font-size:14px;color:#4D5159">오늘 <b style="color:#212124;font-variant-numeric:tabular-nums">2026-10-31</b></span>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:#F7F8FA;border-radius:10px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:13px;color:#868B94;font-weight:600;white-space:nowrap">출근</span>
+              <b style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;color:#212124;white-space:nowrap">{{ inTime }}</b>
+            </div>
+            <div style="background:#F7F8FA;border-radius:10px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:6px">
+              <span style="font-size:13px;color:#868B94;font-weight:600;white-space:nowrap">퇴근</span>
+              <b style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;color:#212124;white-space:nowrap">{{ outTime }}</b>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button onClick="{{ checkIn }}" style="{{ inBtnStyle }}">출근</button>
+            <button onClick="{{ checkOut }}" style="{{ outBtnStyle }}">퇴근</button>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0">
+          <div style="padding:20px 20px 0"><h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"></path><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"></path><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35"></path><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"></path></svg>휴가</h2></div>
+          <div style="padding:14px 20px 18px;display:flex;flex-direction:column;gap:12px">
+            <span style="font-size:14px;color:#4D5159;font-weight:600">내 연차</span>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);background:#F7F8FA;border-radius:10px;padding:14px 4px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:13px;color:#868B94">총</span><span style="white-space:nowrap"><b style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums">16.25</b><span style="font-size:13px;color:#868B94"> 일</span></span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px;border-left:1px solid #EAEBEE;border-right:1px solid #EAEBEE"><span style="font-size:13px;color:#868B94">사용</span><span style="white-space:nowrap"><b style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums">1.5</b><span style="font-size:13px;color:#868B94"> 일</span></span></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="font-size:13px;color:#868B94">잔여</span><span style="white-space:nowrap"><b style="font-size:20px;font-weight:700;color:#FF6F0F;font-variant-numeric:tabular-nums">14.75</b><span style="font-size:13px;color:#868B94"> 일</span></span></div>
+            </div>
+          </div>
+          <div style="border-top:1px solid #F2F3F6;padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;color:#4D5159;font-weight:600">휴가 일정 전사 · 앞으로 14일</span>
+            <span style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums">2026-11-06 (금)</span>
+            <div style="display:flex;align-items:center;gap:8px;border:1px solid #EAEBEE;border-radius:8px;padding:9px 12px;font-size:14px">
+              <b style="font-weight:600">새우/이재우</b>
+              <span style="font-size:12px;font-weight:600;color:#FF6F0F;background:#FFF2E9;padding:2px 6px;border-radius:4px">연차</span>
+            </div>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0">
+          <div style="padding:20px 20px 0;display:flex;flex-direction:column;gap:6px">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>이번주 일정</h2>
+            <span style="font-size:13px;color:#868B94">이번주 일정 전사 · 오늘부터 7일</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#868B94;font-size:14px;padding:40px 20px">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#DCDEE3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"></path></svg>
+            예정된 출장·외근이 없습니다.</div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0">
+          <div style="padding:20px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"></path><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"></path><path d="M2 21h20M7 8v3M12 8v3M17 8v3M7 4h.01M12 4h.01M17 4h.01"></path></svg>이달의 소식 <span style="color:#FF6F0F">5</span></h2>
+            <div style="display:flex;align-items:center;gap:2px">
+              <button onClick="{{ prevMonth }}" aria-label="이전 달" style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4D5159;display:flex;align-items:center;justify-content:center" style-hover="background:#F2F3F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+              <b style="font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;min-width:62px;text-align:center;white-space:nowrap">{{ monthLabel }}</b>
+              <button onClick="{{ nextMonth }}" aria-label="다음 달" style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4D5159;display:flex;align-items:center;justify-content:center" style-hover="background:#F2F3F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+            </div>
+          </div>
+          <div style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px">
+            <span style="font-size:14px;font-weight:600;color:#4D5159">생일 <span style="color:#868B94;font-weight:500">5</span></span>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ birthdays }}" as="p" hint-placeholder-count="5">
+                <span style="display:flex;align-items:center;gap:6px;background:#F7F8FA;border-radius:8px;padding:7px 10px;font-size:14px;white-space:nowrap">
+                  <b style="font-weight:600">{{ p.name }}</b><span style="color:#868B94;font-size:13px">{{ p.role }}</span><span style="color:#FF6F0F;font-size:13px;font-weight:600">{{ p.day }}</span>
+                </span>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section style="grid-column:1 / -1;background:#fff;border:1px solid #EAEBEE;border-radius:12px;overflow:hidden;min-width:0">
+          <div style="padding:20px 20px 14px;display:flex;align-items:center;justify-content:space-between">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path></svg>최근 게시글 <span style="color:#FF6F0F">20</span></h2>
+            <span style="font-size:14px;color:#868B94;cursor:pointer;display:flex;align-items:center;gap:2px;white-space:nowrap" style-hover="color:#212124">전체보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></span>
+          </div>
+          <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 130px 100px;gap:16px;padding:10px 20px;background:#F7F8FA;font-size:13px;color:#868B94;font-weight:600;border-top:1px solid #F2F3F6">
+              <span>제목</span><span>작성자</span><span style="text-align:right">작성일시</span>
+            </div>
+          </sc-if>
+          <sc-for list="{{ posts }}" as="r" hint-placeholder-count="5">
+            <div style="{{ rowStyle }}" style-hover="background:#FAFAFB">
+              <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                <sc-if value="{{ r.notice }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:#fff;background:#FF6F0F;padding:3px 7px;border-radius:4px;flex-shrink:0">알림</span></sc-if>
+                <span style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.title }}</span>
+                <span style="flex:1"></span>
+                <sc-if value="{{ r.comments }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:3px;font-size:13px;color:#FF6F0F;font-weight:600;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>{{ r.comments }}</span></sc-if>
+                <sc-if value="{{ r.files }}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;gap:3px;font-size:13px;color:#868B94;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m21.4 11-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg>{{ r.files }}</span></sc-if>
+              </div>
+              <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+                <span style="color:#4D5159;font-size:14px">{{ r.author }}</span>
+                <span style="text-align:right;color:#868B94;font-size:14px;font-variant-numeric:tabular-nums">{{ r.date }}</span>
+              </sc-if>
+              <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+                <span style="color:#868B94;font-size:13px;font-variant-numeric:tabular-nums">{{ r.author }} · {{ r.date }}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;sidebarOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { sel: 0, approvalOpen: true, boardOpen: true, inTime: null, outTime: null, month: 9, sideOpen: null, w: typeof window !== 'undefined' ? window.innerWidth : 1440 };
+  componentDidMount() { this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onR); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); }
+  now() { const d = new Date(); return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+  css(x) { return Object.fromEntries(x.split(';').filter(Boolean).map(p => { const i = p.indexOf(':'); return [p.slice(0,i).trim().replace(/-([a-z])/g,(_,c)=>c.toUpperCase()), p.slice(i+1).trim()]; })); }
+  renderVals() {
+    const s = this.state, A = '#FF6F0F', o = x => this.css(x);
+    const wide = s.w >= 1024, isMobile = s.w < 640;
+    const sideOpen = s.sideOpen ?? (wide ? (this.props.sidebarOpen ?? true) : false);
+    const tileDefs = [['결재할 문서',0,'#2B6EF2','M10 9H8M16 13H8M16 17H8'],['진행 중',1,'#868B94','M12 12v3l2 1'],['완료',0,'#1AA174','m9 15 2 2 4-4'],['반려',0,'#E5483D','m14.5 12.5-5 5M9.5 12.5l5 5'],['임시저장',0,'#868B94','M12 18v-6M9 15h6'],['내가 결재한',0,'#7A5AF8','M9 15h6M12 12v6']];
+    const tiles = tileDefs.map(([label,count,c,icon],i) => {
+      const on = s.sel === i;
+      return { label, count, icon, select: () => this.setState({ sel: i }),
+        style: o(`display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 4px;border-radius:10px;cursor:pointer;font:inherit;transition:all .15s;border:1px solid ${on?A:'#EAEBEE'};background:${on?'#FFF2E9':'#fff'};min-width:0`),
+        dotStyle: o(`width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:${c};background:${c}1A`),
+        numStyle: o(`font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;color:${count?A:(on?'#212124':'#ADB1BA')}`) };
+    });
+    const sub = [['결재 대기',''],['내가 올린 문서','2'],['진행 중','1',1],['완료','1',1],['반려','',1],['임시저장','',1],['참조 문서',''],['공유받은 문서',''],['내가 결재한','']];
+    const approvalItems = sub.map(([label,count,ind]) => ({ label, count,
+      style: o(`height:32px;display:flex;align-items:center;padding:0 10px 0 ${ind?22:10}px;border-radius:6px;color:#4D5159;font-size:14px;cursor:pointer`) }));
+    const btn = (primary, disabled) => o(`height:44px;border-radius:8px;font:inherit;font-weight:700;font-size:15px;cursor:${disabled?'default':'pointer'};border:1px solid ${primary?A:'#DCDEE3'};background:${primary?A:'#fff'};color:${primary?'#fff':(disabled?'#ADB1BA':'#212124')}`);
+    const m = ((s.month % 12) + 12) % 12, y = 2026 + Math.floor(s.month / 12);
+    const chev = open => ({ transition: 'transform .15s', transform: open ? 'rotate(180deg)' : 'none' });
+    return {
+      wide, isMobile, notMobile: !isMobile,
+      settingsOpen: !!s.settingsOpen, toggleSettings: () => this.setState({ settingsOpen: !s.settingsOpen }), closeSettings: () => this.setState({ settingsOpen: false }),
+      userOpen: !!s.userOpen, toggleUser: () => this.setState({ userOpen: !s.userOpen }), closeUser: () => this.setState({ userOpen: false }),
+      userChevron: { transition: 'transform .15s', transform: s.userOpen ? 'rotate(180deg)' : 'none' },
+      showAside: sideOpen, showScrim: sideOpen && !wide,
+      asideStyle: o(`width:232px;flex-shrink:0;background:#fff;border-right:1px solid #EAEBEE;display:flex;flex-direction:column;top:56px;height:calc(100vh - 56px);overflow-y:auto;${wide?'position:sticky':'position:fixed;left:0;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,0.12)'}`),
+      toggleSide: () => this.setState({ sideOpen: !sideOpen }),
+      closeSide: () => this.setState({ sideOpen: false }),
+      approvalOpen: s.approvalOpen, boardOpen: s.boardOpen,
+      approvalChevron: chev(s.approvalOpen), boardChevron: chev(s.boardOpen),
+      toggleApproval: () => this.setState({ approvalOpen: !s.approvalOpen }),
+      toggleBoard: () => this.setState({ boardOpen: !s.boardOpen }),
+      approvalItems,
+      boardItems: ['공지사항','자유게시판','자료실','공문관리 게시판','GW 의견 및 오류 게시판'],
+      tiles, docEmpty: s.sel === 1 ? '진행 중인 문서 1건 · 2026-10-29 지출결의서' : '해당하는 문서가 없습니다.',
+      inTime: s.inTime || '--:--', outTime: s.outTime || '--:--',
+      checkIn: () => !s.inTime && this.setState({ inTime: this.now() }),
+      checkOut: () => s.inTime && !s.outTime && this.setState({ outTime: this.now() }),
+      inBtnStyle: s.inTime ? btn(false, true) : btn(true),
+      outBtnStyle: s.inTime && !s.outTime ? btn(true) : btn(false, true),
+      monthLabel: `${y}. ${String(m+1).padStart(2,'0')}`,
+      prevMonth: () => this.setState({ month: s.month - 1 }),
+      nextMonth: () => this.setState({ month: s.month + 1 }),
+      rowStyle: o(isMobile
+        ? 'display:flex;flex-direction:column;gap:4px;padding:12px 16px;border-top:1px solid #F2F3F6;cursor:pointer'
+        : 'display:grid;grid-template-columns:minmax(0,1fr) 130px 100px;gap:16px;align-items:center;padding:0 20px;min-height:44px;border-top:1px solid #F2F3F6;cursor:pointer'),
+      birthdays: [
+        { name:'네로/김민식', role:'매니저', day:'1일' },{ name:'노라/황혜연', role:'매니저', day:'1일' },
+        { name:'케이/이기원', role:'헤더', day:'13일' },{ name:'골드킹/손금왕', role:'매니저', day:'20일' },
+        { name:'제니스/김예림', role:'매니저', day:'25일' }],
+      posts: [
+        { title:'결재진행관련 스페이스 알림 오류인가요?', comments:3, files:2, author:'제스트/박인서', date:'2026-10-23' },
+        { notice:true, title:'GW·ERP 업데이트 모음 (10/9~10/16)', author:'제로/오승훈', date:'2026-10-17' },
+        { title:'휴대폰에서 메뉴펼치기시 스크롤 불가', comments:1, author:'존/김은천', date:'2026-10-14' },
+        { title:'직원 연차/출장 정보 확인 기능', comments:1, author:'존/김은천', date:'2026-10-13' },
+        { notice:true, title:'GW·ERP 업데이트 모음 (10/3~10/8)', author:'제로/오승훈', date:'2026-10-08' }]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+body{margin:0;background:#F7F8FA;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;color:#212124;-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:#FF6F0F;text-decoration:none}a:hover{color:#E65A00}
+*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;font-size:14px;letter-spacing:-0.01em">
+  <header style="height:56px;background:#fff;border-bottom:1px solid #EAEBEE;display:flex;align-items:center;padding:0 clamp(8px,2vw,20px);gap:6px;position:sticky;top:0;z-index:30">
+    <button onClick="{{ toggleSide }}" aria-label="메뉴" style="width:40px;height:40px;border:none;background:transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#4D5159;flex-shrink:0" style-hover="background:#F2F3F6">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+    <nav style="display:flex;gap:4px;align-items:center">
+      <img src="assets/akiaka-logo.png" alt="Akiaka" style="height:20px;width:auto;display:block;margin:0 8px 0 4px">
+      <span style="padding:6px 12px;font-weight:700;color:#fff;background:#FF6F0F;border-radius:8px">ERP</span>
+      <a href="GW Dashboard.dc.html" style="padding:8px 10px;font-weight:600;color:#868B94;border-radius:8px" style-hover="background:#F2F3F6;color:#212124">GW</a>
+    </nav>
+    <div style="flex:1"></div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <span style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:#4D5159;background:#F2F3F6;padding:5px 10px;border-radius:6px;font-variant-numeric:tabular-nums;white-space:nowrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="6" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9M6 9v6"></path></svg>v2026-10-28</span>
+      </sc-if>
+      <div style="position:relative">
+        <button onClick="{{ toggleUser }}" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 8px 0 4px;border:none;background:transparent;border-radius:20px;cursor:pointer;font:inherit;color:#212124" style-hover="background:#F2F3F6">
+          <span style="width:32px;height:32px;border-radius:50%;background:#FFF2E9;color:#FF6F0F;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">손</span>
+          <sc-if value="{{ notMobile }}" hint-placeholder-val="{{ true }}">
+            <b style="font-size:14px;font-weight:600;white-space:nowrap">골드킹/손금왕</b>
+          </sc-if>
+          <svg style="{{ userChevron }}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <sc-if value="{{ userOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeUser }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:40"></div>
+          <div style="position:absolute;right:0;top:48px;width:232px;background:#fff;border:1px solid #EAEBEE;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:41;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px">
+              <span style="width:40px;height:40px;border-radius:50%;background:#FFF2E9;color:#FF6F0F;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">손</span>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+                <b style="font-size:14px;font-weight:700">골드킹/손금왕</b>
+                <span style="font-size:13px;color:#868B94">디자인센터 · 매니저</span>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F2F3F6;padding:6px">
+              <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:8px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>내 정보</div>
+              <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:8px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path></svg>로그아웃</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <div style="flex:1;display:flex;min-height:0">
+    <sc-if value="{{ showScrim }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeSide }}" style="position:fixed;top:56px;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:19"></div>
+    </sc-if>
+    <sc-if value="{{ showAside }}" hint-placeholder-val="{{ true }}">
+    <aside style="{{ asideStyle }}">
+      <nav style="padding:10px;display:flex;flex-direction:column;gap:2px;flex:1">
+        <span style="font-size:13px;font-weight:600;color:#ADB1BA;padding:8px 12px 4px">메인메뉴</span>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;background:#FFF2E9;color:#FF6F0F;font-weight:700">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"></path><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path></svg>인사이트</div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path><path d="M8 10v4M12 10v2M16 10v6"></path></svg>프로젝트 관리</div>
+        <div style="margin-left:21px;padding-left:12px;border-left:1px solid #EAEBEE">
+          <div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l2 2 4-4M3 7l2 2 4-4M13 6h8M13 12h8M13 18h8"></path></svg>진척률</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"></path></svg>현황 관리</div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path><path d="M12 22V12M3.3 7l7.703 4.734a2 2 0 0 0 1.994 0L20.7 7M7.5 4.27l9 5.15"></path></svg>자산 관리</div>
+        <div style="margin-left:21px;padding-left:12px;border-left:1px solid #EAEBEE">
+          <div style="height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;color:#4D5159;font-size:14px;cursor:pointer" style-hover="background:#F7F8FA;color:#212124">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4"></path></svg>장비 대여</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"></path></svg>운영경비 관리</div>
+        <div style="height:1px;background:#F2F3F6;margin:8px 4px"></div>
+        <span style="font-size:13px;font-weight:600;color:#ADB1BA;padding:8px 12px 4px">관리</span>
+        <div style="display:flex;align-items:center;gap:10px;height:38px;padding:0 12px;border-radius:8px;color:#4D5159;font-weight:500;cursor:pointer" style-hover="background:#F7F8FA">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>시스템 게시판</div>
+      </nav>
+    </aside>
+    </sc-if>
+
+    <main style="flex:1;min-width:0;padding:clamp(16px,2.4vw,24px) clamp(12px,2.4vw,24px) 40px;display:flex;flex-direction:column;gap:16px">
+      <div style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <h1 style="margin:0;font-size:clamp(18px,2vw,20px);font-weight:700;letter-spacing:-0.03em;display:flex;align-items:center;gap:8px;white-space:nowrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>2026년 프로젝트 현황</h1>
+        <div style="display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.select }}" style="{{ t.style }}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"></path></svg>{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px">
+            <button onClick="{{ vatOff }}" style="{{ vatOffStyle }}">부가세 별도</button>
+            <button onClick="{{ vatOn }}" style="{{ vatOnStyle }}">부가세 포함</button>
+          </div>
+          <div style="position:relative;display:flex">
+            <select style="height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:8px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
+              <option>전체 법인</option>
+            </select>
+            <svg style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+          </div>
+          <div style="position:relative;display:flex">
+            <select style="height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:8px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
+              <option>2026년</option><option>2025년</option>
+            </select>
+            <svg style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px">
+        <section style="background:#fff;border:1.5px solid #1AA174;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0">
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#1AA174"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>수주 (계약)</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-bottom:12px;border-bottom:1px solid #F2F3F6">
+            <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#1AA174;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.order }}</b><span style="font-size:14px;color:#868B94;font-weight:600;white-space:nowrap">61건</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="display:flex;align-items:center;gap:6px;color:#2B6EF2;font-weight:600;white-space:nowrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l2 2a1 1 0 1 0 3-3M14 14l2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4M21 3l1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"></path></svg>수행(계약완료)</span><span style="font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">41건 · {{ k.doing }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="display:flex;align-items:center;gap:6px;color:#E65A00;font-weight:600;white-space:nowrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg>계약대기</span><span style="font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">8건 · {{ k.wait }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="display:flex;align-items:center;gap:6px;color:#4D5159;font-weight:600;white-space:nowrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"></path></svg>완료(종료)</span><span style="font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap">12건 · {{ k.done }}</span></div>
+          </div>
+        </section>
+
+        <section style="background:#EEF9F4;border:1px solid #D3F0E3;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;min-width:0">
+          <div style="display:flex;justify-content:space-between;gap:8px">
+            <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#138A62"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16M19 9l-5 5-4-4-3 3"></path></svg>금년 누적매출 (계획)</span>
+            <span style="font-size:14px;color:#4D5159;font-weight:600;white-space:nowrap">214건</span>
+          </div>
+          <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#138A62;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.sales }}</b>
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;flex-wrap:wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#138A62" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"></path></svg>수금완료 {{ k.collected }}</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;color:#4D5159;font-variant-numeric:tabular-nums;flex-wrap:wrap"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg>올해 실입금 {{ k.deposit }}<b style="color:#138A62">(+{{ k.depositDiff }})</b></span>
+        </section>
+
+        <section style="background:#F2F3F6;border:1px solid #EAEBEE;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;min-width:0">
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#4D5159"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"></path></svg>완료 (종료)</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+            <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#212124;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.done }}</b><span style="font-size:14px;color:#868B94;font-weight:600;white-space:nowrap">12건</span>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#E65A00"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10M10 20c5.5-2.5.8-6.4 3-10M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8zM14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path></svg>발굴/영업 (신규)</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+            <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#E65A00;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.lead }}</b><span style="font-size:14px;color:#868B94;font-weight:600;white-space:nowrap">17건</span>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#2B6EF2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"></rect><path d="M7 11v4a2 2 0 0 0 2 2h4"></path><rect x="13" y="13" width="8" height="8" rx="2"></rect></svg>파이프라인 (참여)</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+            <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#2B6EF2;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.pipe }}</b><span style="font-size:14px;color:#868B94;font-weight:600;white-space:nowrap">9건</span>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#E5483D"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M15 9l-6 6M9 9l6 6"></path></svg>실주</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px">
+            <b style="font-size:clamp(18px,1.7vw,21px);font-weight:700;color:#E5483D;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ k.lost }}</b><span style="font-size:14px;color:#868B94;font-weight:600;white-space:nowrap">21건</span>
+          </div>
+        </section>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0;overflow:hidden">
+          <div style="padding:20px 20px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16M19 9l-5 5-4-4-3 3"></path></svg>수주 추이 (Trend)</h2>
+            <span style="font-size:13px;color:#868B94;white-space:nowrap">선택년도 기준 (완료포함)</span>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1.4fr);gap:12px;padding:10px 20px;background:#F7F8FA;font-size:13px;color:#868B94;font-weight:600;border-top:1px solid #F2F3F6">
+            <span>월</span><span style="text-align:right">건수</span><span style="text-align:right">금액</span>
+          </div>
+          <div style="max-height:400px;overflow-y:auto">
+            <sc-for list="{{ trend }}" as="r" hint-placeholder-count="9">
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1.4fr);gap:12px;align-items:center;padding:0 20px;min-height:44px;border-top:1px solid #F2F3F6;font-variant-numeric:tabular-nums" style-hover="background:#FAFAFB">
+                <span style="font-weight:600">{{ r.m }}</span>
+                <span style="text-align:right;color:#4D5159">{{ r.n }}건</span>
+                <span style="text-align:right;font-weight:700">{{ r.amt }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="background:#fff;border:1px solid #EAEBEE;border-radius:12px;display:flex;flex-direction:column;min-width:0;overflow:hidden">
+          <div style="padding:20px 20px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+            <h2 style="margin:0;white-space:nowrap;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3"></path></svg>사업유형별 분석</h2>
+            <span style="font-size:13px;color:#868B94;white-space:nowrap">수주 금액 기준 (완료 포함)</span>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1.6fr) 56px minmax(0,1.2fr);gap:12px;padding:10px 20px;background:#F7F8FA;font-size:13px;color:#868B94;font-weight:600;border-top:1px solid #F2F3F6">
+            <span>유형</span><span style="text-align:right">건수</span><span style="text-align:right">금액</span>
+          </div>
+          <sc-for list="{{ types }}" as="r" hint-placeholder-count="7">
+            <div style="display:grid;grid-template-columns:minmax(0,1.6fr) 56px minmax(0,1.2fr);gap:12px;align-items:center;padding:10px 20px;min-height:52px;border-top:1px solid #F2F3F6;font-variant-numeric:tabular-nums" style-hover="background:#FAFAFB">
+              <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                <span style="display:flex;align-items:baseline;gap:6px"><b style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</b><span style="font-size:13px;color:#868B94">{{ r.pct }}%</span></span>
+                <span style="height:4px;border-radius:2px;background:#F2F3F6;overflow:hidden;display:block"><span style="{{ r.bar }}"></span></span>
+              </div>
+              <span style="text-align:right;color:#4D5159">{{ r.n }}건</span>
+              <span style="text-align:right;font-weight:700">{{ r.amt }}</span>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 0, vat: false, sideOpen: null, w: typeof window !== 'undefined' ? window.innerWidth : 1440 };
+  componentDidMount() { this.onR = () => this.setState({ w: window.innerWidth }); window.addEventListener('resize', this.onR); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onR); }
+  css(x) { return Object.fromEntries(x.split(';').filter(Boolean).map(p => { const i = p.indexOf(':'); return [p.slice(0,i).trim().replace(/-([a-z])/g,(_,c)=>c.toUpperCase()), p.slice(i+1).trim()]; })); }
+  renderVals() {
+    const s = this.state, o = x => this.css(x), A = '#FF6F0F';
+    const wide = s.w >= 1024, isMobile = s.w < 640;
+    const sideOpen = s.sideOpen ?? (wide ? (this.props.sidebarOpen ?? true) : false);
+    const f = n => Math.round(s.vat ? n * 1.1 : n).toLocaleString('ko-KR');
+    const seg = on => o(`height:32px;padding:0 12px;border:none;border-radius:6px;font:inherit;font-size:14px;font-weight:${on?700:500};cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;background:${on?'#fff':'transparent'};color:${on?'#212124':'#868B94'};box-shadow:${on?'0 1px 3px rgba(0,0,0,0.08)':'none'}`);
+    const tabs = [['기본','M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3'],['인사이트','M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4'],['부서별','M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4']]
+      .map(([label,icon],i) => ({ label, icon, select: () => this.setState({ tab: i }), style: seg(s.tab === i) }));
+    const trendRaw = [['2026-10',5,684210500],['2026-09',6,1120550000],['2026-08',3,342800000],['2026-07',8,2015330400],['2026-06',4,410900000],['2026-05',7,1365402000],['2026-04',5,780120800],['2026-03',9,3284760000],['2026-02',6,1894377000],['2026-01',8,1343290000]];
+    const typeRaw = [['비전자DB구축',22,5410200000],['시스템&데이터',9,2840515300],['콘텐츠',6,1702330000],['유지보수',13,1566800400],['기타/미분류',3,702410000],['유통',5,611285000],['컨설팅&IS(M)P',3,408200000]];
+    const total = typeRaw.reduce((a,r) => a + r[2], 0);
+    return {
+      wide, isMobile, notMobile: !isMobile,
+      userOpen: !!s.userOpen, toggleUser: () => this.setState({ userOpen: !s.userOpen }), closeUser: () => this.setState({ userOpen: false }),
+      userChevron: { transition: 'transform .15s', transform: s.userOpen ? 'rotate(180deg)' : 'none' },
+      showAside: sideOpen, showScrim: sideOpen && !wide,
+      asideStyle: o(`width:232px;flex-shrink:0;background:#fff;border-right:1px solid #EAEBEE;display:flex;flex-direction:column;top:56px;height:calc(100vh - 56px);overflow-y:auto;${wide?'position:sticky':'position:fixed;left:0;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,0.12)'}`),
+      toggleSide: () => this.setState({ sideOpen: !sideOpen }),
+      closeSide: () => this.setState({ sideOpen: false }),
+      tabs,
+      vatOff: () => this.setState({ vat: false }), vatOn: () => this.setState({ vat: true }),
+      vatOffStyle: seg(!s.vat), vatOnStyle: seg(s.vat),
+      k: { order: f(13241740700), doing: f(9826410500), wait: f(2310950000), done: f(1104380200),
+        sales: f(10562318400), collected: f(7215604900), deposit: f(7488120300), depositDiff: f(272515400),
+        lead: f(11830415000), pipe: f(15207660800), lost: f(28904117560) },
+      trend: trendRaw.map(([m,n,a]) => ({ m, n, amt: f(a) })),
+      types: typeRaw.map(([name,n,a]) => { const p = a / total * 100; return { name, n, amt: f(a), pct: p.toFixed(2), bar: o(`display:block;height:100%;border-radius:2px;background:${A};width:${p}%`) }; })
+    };
+  }
+}
+</script>
+</body>
+</html>
