@@ -96,26 +96,26 @@ button,input,select,textarea{font-family:inherit}
       <div style="background:#fff;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <h1 style="margin:0;font-size:clamp(20px,2.2vw,24px);font-weight:700;letter-spacing:-0.03em;display:flex;align-items:center;gap:8px;white-space:nowrap">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6F0F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>2026년 프로젝트 현황</h1>
-        <div style="display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px">
+        <div style="{{ tabsWrap }}">
           <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
             <button onClick="{{ t.select }}" style="{{ t.style }}">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ t.icon }}"></path></svg>{{ t.label }}</button>
           </sc-for>
         </div>
         <div style="flex:1"></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px">
+        <div style="{{ filterWrap }}">
+          <div style="{{ vatWrap }}">
             <button onClick="{{ vatOff }}" style="{{ vatOffStyle }}">부가세 별도</button>
             <button onClick="{{ vatOn }}" style="{{ vatOnStyle }}">부가세 포함</button>
           </div>
-          <div style="position:relative;display:flex">
-            <select style="height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:12px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
+          <div style="position:relative;display:flex;min-width:0">
+            <select style="flex:1;min-width:0;height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:12px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
               <option>전체 법인</option>
             </select>
             <svg style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
           </div>
-          <div style="position:relative;display:flex">
-            <select style="height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:12px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
+          <div style="position:relative;display:flex;min-width:0">
+            <select style="flex:1;min-width:0;height:38px;padding:0 36px 0 14px;border:1px solid #DCDEE3;border-radius:12px;font:inherit;font-weight:600;color:#212124;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;outline:none">
               <option>2026년</option><option>2025년</option>
             </select>
             <svg style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#868B94" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg>
@@ -230,9 +230,9 @@ class Component extends DCLogic {
     const wide = s.w >= 1024, isMobile = s.w < 640;
     const sideOpen = s.sideOpen ?? (wide ? (this.props.sidebarOpen ?? true) : false);
     const f = n => Math.round(s.vat ? n * 1.1 : n).toLocaleString('ko-KR');
-    const seg = on => o(`height:32px;padding:0 12px;border:none;border-radius:6px;font:inherit;font-size:14px;font-weight:${on?700:500};cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;background:${on?'#fff':'transparent'};color:${on?'#212124':'#868B94'};box-shadow:${on?'0 1px 3px rgba(0,0,0,0.08)':'none'}`);
+    const seg = (on, fill) => o(`${fill?'flex:1;justify-content:center;':''}height:32px;padding:0 12px;border:none;border-radius:6px;font:inherit;font-size:14px;font-weight:${on?700:500};cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap;background:${on?'#fff':'transparent'};color:${on?'#212124':'#868B94'};box-shadow:${on?'0 1px 3px rgba(0,0,0,0.08)':'none'}`);
     const tabs = [['기본','M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3'],['인사이트','M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4'],['부서별','M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18ZM6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4']]
-      .map(([label,icon],i) => ({ label, icon, select: () => this.setState({ tab: i }), style: seg(s.tab === i) }));
+      .map(([label,icon],i) => ({ label, icon, select: () => this.setState({ tab: i }), style: seg(s.tab === i, isMobile) }));
     const trendRaw = [['2026-10',5,684210500],['2026-09',6,1120550000],['2026-08',3,342800000],['2026-07',8,2015330400],['2026-06',4,410900000],['2026-05',7,1365402000],['2026-04',5,780120800],['2026-03',9,3284760000],['2026-02',6,1894377000],['2026-01',8,1343290000]];
     const typeRaw = [['비전자DB구축',22,5410200000],['시스템&데이터',9,2840515300],['콘텐츠',6,1702330000],['유지보수',13,1566800400],['기타/미분류',3,702410000],['유통',5,611285000],['컨설팅&IS(M)P',3,408200000]];
     const total = typeRaw.reduce((a,r) => a + r[2], 0);
@@ -251,7 +251,10 @@ class Component extends DCLogic {
       closeSide: () => this.setState({ sideOpen: false }),
       tabs,
       vatOff: () => this.setState({ vat: false }), vatOn: () => this.setState({ vat: true }),
-      vatOffStyle: seg(!s.vat), vatOnStyle: seg(s.vat),
+      vatOffStyle: seg(!s.vat, isMobile), vatOnStyle: seg(s.vat, isMobile),
+      tabsWrap: o(`display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px${isMobile?';width:100%':''}`),
+      vatWrap: o(`display:flex;gap:2px;background:#F2F3F6;border-radius:8px;padding:3px${isMobile?';grid-column:1 / -1':''}`),
+      filterWrap: o(isMobile ? 'display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%' : 'display:flex;gap:8px;flex-wrap:wrap'),
       k: { order: f(13241740700), doing: f(9826410500), wait: f(2310950000), done: f(1104380200),
         sales: f(10562318400), collected: f(7215604900), deposit: f(7488120300), depositDiff: f(272515400),
         lead: f(11830415000), pipe: f(15207660800), lost: f(28904117560) },
