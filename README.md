@@ -19,3 +19,6 @@ Claude Design으로 만든 ERP·그룹웨어(GW) 대시보드 시안입니다.
 ## 보기
 
 `index.html`을 브라우저로 열면 됩니다. 폰트(Pretendard)는 CDN에서 불러옵니다.
+
+## 이어서 작업하기
+결정사항·코드 지도·수정 방법은 [CLAUDE.md](CLAUDE.md), 전체 프로젝트 목록은 [IUX 프로젝트 목록](https://github.com/handgoldking1234/iux-app/blob/main/docs/PROJECTS.md)에 있습니다.
